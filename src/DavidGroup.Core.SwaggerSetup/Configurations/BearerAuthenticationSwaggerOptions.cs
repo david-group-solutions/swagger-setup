@@ -1,0 +1,39 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Microsoft.OpenApi;
+
+using Swashbuckle.AspNetCore.SwaggerGen;
+
+namespace DavidGroup.Core.SwaggerSetup.Configurations;
+
+/// <summary>
+/// Configures Swagger to support JWT Bearer authentication in the Swagger UI.
+/// </summary>
+/// <remarks>
+/// This class implements <see cref="IConfigureOptions{TOptions}"/> and sets up:
+/// <list type="bullet">
+/// <item>A security definition named "Bearer" for JWT tokens.</item>
+/// <item>A security requirement so that endpoints can be tested with the Bearer token in Swagger UI.</item>
+/// </list>
+/// </remarks>
+public class BearerAuthenticationSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
+{
+    /// <summary>
+    /// Implemented method for configuration.
+    /// </summary>
+    public void Configure(SwaggerGenOptions options)
+    {
+        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        {
+            Name = "Authorization",
+            Type = SecuritySchemeType.ApiKey,
+            Scheme = "Bearer",
+            BearerFormat = "JWT",
+            In = ParameterLocation.Header,
+            Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.",
+        });
+
+        options.AddSecurityRequirement(document
+            => new OpenApiSecurityRequirement { [new OpenApiSecuritySchemeReference("Bearer", document)] = [] });
+    }
+}
