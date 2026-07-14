@@ -3,6 +3,8 @@ using DavidGroup.Core.SwaggerSetup.Configurations;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using Swashbuckle.AspNetCore.SwaggerGen;
+
 namespace DavidGroup.Core.SwaggerSetup.Extensions;
 
 /// <summary>
@@ -13,14 +15,16 @@ public static class ServiceCollectionExtensions
     /// <summary>
     /// Registers Swashbuckle and configures it using different variety Swagger conventions.
     /// </summary>
-    public static IServiceCollection AddDefaultSwagger(
-        this IServiceCollection services,
-        Action<SwaggerSetupBuilder> configure)
+    public static IServiceCollection AddDefaultSwagger(this IServiceCollection services,
+        Action<SwaggerSetupBuilder> configure,
+        Action<SwaggerGenOptions>? configureSwaggerGen = null)
     {
         services.AddSwaggerGen(options =>
         {
             options.UseAllOfToExtendReferenceSchemas();
             options.SupportNonNullableReferenceTypes();
+
+            configureSwaggerGen?.Invoke(options);
         });
 
         services.ConfigureOptions<GeneralSwaggerOptions>();
