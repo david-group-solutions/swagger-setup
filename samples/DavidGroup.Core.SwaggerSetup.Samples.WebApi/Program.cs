@@ -41,6 +41,6 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.MapGet("api/hello-world", () => "Hello World!")
-    .WithTags("HelloWorld");
+    .WithTags("Examples / Minimal API");
 
 app.Run();
