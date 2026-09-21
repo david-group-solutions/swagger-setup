@@ -6,12 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DavidGroup.Core.SwaggerSetup.Samples.WebApi.Controllers;
 
+[ApiController]
+[Route("api/[controller]")]
 [ApiVersion("1.0", Deprecated = true)]
 [ApiVersion("1.1")]
 [ApiVersion("2.0")]
-[SwaggerControllerOrder(1)]
-[ApiController]
-[Route("api/[controller]")]
+[Tags("Examples / API Versioning")]
+[SwaggerControllerOrder(200 + 2)]
 public class ApiVersioningController : ControllerBase
 {
     [HttpGet]

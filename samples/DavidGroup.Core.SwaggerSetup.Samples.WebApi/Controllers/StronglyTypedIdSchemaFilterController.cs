@@ -7,9 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DavidGroup.Core.SwaggerSetup.Samples.WebApi.Controllers;
 
-[SwaggerControllerOrder(0)]
 [ApiController]
 [Route("api/[controller]")]
+[Tags("Examples / StronglyTypedIds")]
+[SwaggerControllerOrder(200 + 1)]
 public class StronglyTypedIdSchemaFilterController : ControllerBase
 {
     [HttpGet]
