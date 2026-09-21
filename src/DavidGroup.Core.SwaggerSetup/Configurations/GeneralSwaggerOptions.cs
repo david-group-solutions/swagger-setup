@@ -24,13 +24,13 @@ public class GeneralSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
 
         options.TagActionsBy(api =>
         {
-            if (api.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor)
-                return [controllerActionDescriptor.ControllerName];
-
             IList<object> endpointMetadata = api.ActionDescriptor.EndpointMetadata;
             ITagsMetadata? tagMetadata = endpointMetadata.OfType<ITagsMetadata>().FirstOrDefault();
             if (tagMetadata != null)
                 return tagMetadata.Tags.ToArray();
+
+            if (api.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor)
+                return [controllerActionDescriptor.ControllerName];
 
             return [api.RelativePath?.Split('/')[0] ?? "Default"];
         });
